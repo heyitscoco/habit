@@ -34,6 +34,14 @@ def create_habit():
     return jsonify({'message': 'Habit created successfully'})
 
 
+@app.route('/events', methods=['GET'])
+def get_events():
+    events = Event.query.all()
+    event_list = [{'id': event.id, 'habit_id': event.habit_id,
+                   'timestamp': event.timestamp} for event in events]
+    return jsonify({'events': event_list})
+
+
 @app.route('/events', methods=['POST'])
 def create_event():
     data = request.get_json()
